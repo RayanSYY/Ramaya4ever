@@ -24,7 +24,7 @@ body{
   z-index:5;
 }
 
-/* Top title much bigger */
+/* Top title */
 .topbar{
   position:sticky;
   top:0;
@@ -56,8 +56,8 @@ body{
   transition: opacity .45s ease;
 }
 .fadeOut{ opacity:0; }
-.fadeIn{ opacity:1; }
 
+/* Default BIG card (intro + guilty) */
 .card{
   background:var(--panel);
   border-radius:34px;
@@ -177,4 +177,25 @@ body{
   .btnRow{ flex-wrap:wrap; }
   .squareBtn{ flex: 1 1 320px; max-width: 92vw; }
   .title{ font-size:clamp(34px, 7vw, 54px); }
+}
+
+/* ---------- Smaller ONLY for the 2 middle pages ---------- */
+.card.normalSize{
+  width: min(900px, 92vw);
+  padding: 30px 26px;
+}
+
+.card.normalSize .title{
+  font-size: clamp(28px, 3.5vw, 46px);
+}
+
+.card.normalSize .centerImg{
+  width: min(520px, 92%);
+  border-radius: 22px;
+}
+
+.card.normalSize .squareBtn{
+  flex: 0 0 320px;
+  padding: 20px 22px;
+  font-size: 1.45rem;
 }
