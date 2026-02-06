@@ -1,0 +1,180 @@
+:root{
+  --pink:#ff4fb7;
+  --red:#ff2a2a;
+  --panel:rgba(255,255,255,.94);
+  --shadow:0 22px 55px rgba(0,0,0,.30);
+}
+
+*{box-sizing:border-box;}
+html,body{height:100%;}
+
+body{
+  margin:0;
+  font-family:system-ui,Arial,sans-serif;
+  background:url("images/bg-hearts.jpg") center/cover fixed;
+  overflow-x:hidden;
+}
+
+/* FLOATING HEARTS LAYER */
+.heartsLayer{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  overflow:hidden;
+  z-index:5;
+}
+
+/* Top title much bigger */
+.topbar{
+  position:sticky;
+  top:0;
+  z-index:20;
+  background:rgba(255,255,255,.82);
+  backdrop-filter: blur(10px);
+  padding:18px 12px;
+  font-size:2.1rem;
+  font-weight:1000;
+  text-align:center;
+}
+
+.app{
+  position:relative;
+  z-index:10; /* above hearts */
+  min-height:calc(100vh - 86px);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:36px 16px;
+}
+
+/* Fade transitions */
+.fadeWrap{
+  width:100%;
+  display:flex;
+  justify-content:center;
+  opacity:1;
+  transition: opacity .45s ease;
+}
+.fadeOut{ opacity:0; }
+.fadeIn{ opacity:1; }
+
+.card{
+  background:var(--panel);
+  border-radius:34px;
+  box-shadow:var(--shadow);
+  padding:44px 40px;
+  width:min(1200px, 96vw);
+  text-align:center;
+}
+
+.title{
+  font-size:clamp(40px, 5vw, 66px);
+  font-weight:1000;
+  margin:0 0 22px;
+  line-height:1.05;
+}
+
+.centerImg{
+  width:min(640px, 94%);
+  height:auto;
+  margin:18px auto 6px;
+  border-radius:26px;
+  box-shadow:0 18px 34px rgba(0,0,0,.28);
+  display:block;
+}
+
+.btnRow{
+  display:flex;
+  justify-content:center;
+  gap:28px;
+  margin-top:30px;
+  flex-wrap:nowrap;
+}
+
+.squareBtn{
+  flex:0 0 380px;
+  max-width:45vw;
+  padding:26px 30px;
+  font-size:1.8rem;
+  border-radius:26px;
+  background:white;
+  font-weight:1000;
+  cursor:pointer;
+  box-shadow:0 14px 28px rgba(0,0,0,.25);
+  transition:transform .1s ease;
+  user-select:none;
+  text-align:center;
+  border: 2px solid rgba(0,0,0,.08);
+}
+.squareBtn:active{transform:scale(.97);}
+
+.pinkText{color:var(--pink);}
+.redText{color:var(--red);}
+.disabled{opacity:.6;pointer-events:none;}
+
+.guiltyText{
+  font-size:clamp(44px, 4.5vw, 80px);
+  font-weight:1000;
+  color:var(--red);
+  background:rgba(255,255,255,.90);
+  padding:44px 34px;
+  border-radius:30px;
+  box-shadow:var(--shadow);
+  text-align:center;
+  width:min(1400px, 96vw);
+}
+
+/* FINAL GRID */
+.fullscreenGrid{
+  position:fixed;
+  inset:0;
+  z-index:30; /* above hearts */
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  width:100vw;
+  height:100vh;
+}
+
+.gridCell{
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  background: transparent; /* keep hearts background visible */
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.gridCell img{
+  width:100%;
+  height:100%;
+  object-fit:contain; /* full image visible */
+  display:block;
+}
+
+/* HEART ELEMENTS */
+.heart{
+  position:absolute;
+  bottom:-40px;
+  font-size:24px;
+  opacity:.85;
+  animation-name: floatUp;
+  animation-timing-function: linear;
+  will-change: transform, opacity;
+  filter: drop-shadow(0 6px 10px rgba(0,0,0,.15));
+}
+
+@keyframes floatUp{
+  0%   { transform: translateY(0) translateX(0) rotate(0deg); opacity:0; }
+  10%  { opacity:.9; }
+  100% { transform: translateY(-110vh) translateX(var(--drift)) rotate(var(--spin)); opacity:0; }
+}
+
+/* Mobile */
+@media (max-width: 820px){
+  .topbar{ font-size:1.7rem; }
+  .btnRow{ flex-wrap:wrap; }
+  .squareBtn{ flex: 1 1 320px; max-width: 92vw; }
+  .title{ font-size:clamp(34px, 7vw, 54px); }
+}
