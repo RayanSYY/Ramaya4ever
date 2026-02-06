@@ -2,20 +2,7 @@ const app = document.getElementById("app");
 const topbar = document.querySelector(".topbar");
 const music = document.getElementById("bgMusic");
 
-/* ---------------- MUSIC (start on first interaction) ---------------- */
-
-music.volume = 0.25;
-
-function startMusic(){
-  music.play().catch(()=>{});
-  window.removeEventListener("click", startMusic);
-  window.removeEventListener("touchstart", startMusic);
-}
-window.addEventListener("click", startMusic);
-window.addEventListener("touchstart", startMusic);
-
 /* ---------------- FADE HELPERS ---------------- */
-
 function mountWithFade(html) {
   app.innerHTML = `<div class="fadeWrap fadeOut" id="fadeWrap">${html}</div>`;
   requestAnimationFrame(() => {
@@ -31,8 +18,14 @@ function fadeTo(next) {
   setTimeout(next, 450);
 }
 
-/* ---------------- FLOATING HEARTS ---------------- */
+/* ---------------- MUSIC (start exactly on intro button) ---------------- */
+music.volume = 0.25;
 
+function startMusic(){
+  music.play().catch(()=>{});
+}
+
+/* ---------------- FLOATING HEARTS ---------------- */
 const heartsLayer = document.createElement("div");
 heartsLayer.className = "heartsLayer";
 document.body.appendChild(heartsLayer);
@@ -53,14 +46,13 @@ function spawnHeart(){
   heartsLayer.appendChild(h);
   setTimeout(()=>h.remove(), 9000);
 }
-
 setInterval(spawnHeart, 260);
 
 /* ---------------- SCREENS ---------------- */
 
-// NEW INTRO SCREEN (first)
+/* INTRO SCREEN (big) */
 function introScreen(){
-  if (topbar) topbar.style.display = ""; // show topbar
+  if (topbar) topbar.style.display = "";
 
   mountWithFade(`
     <div class="card">
@@ -77,18 +69,17 @@ function introScreen(){
   `);
 
   document.getElementById("readyBtn").onclick = () => {
-    // Start music exactly here (perfect timing)
-    startMusic();
+    startMusic();           // perfect timing
     fadeTo(firstScreen);
   };
 }
 
-// OLD first screen (your original)
+/* MIDDLE SCREEN 1 (smaller) */
 function firstScreen(){
-  if (topbar) topbar.style.display = ""; // show topbar
+  if (topbar) topbar.style.display = "";
 
   mountWithFade(`
-    <div class="card">
+    <div class="card normalSize">
       <div class="title">Would you do me the honors and be my valentine</div>
       <img class="centerImg" src="images/poem.jpg" alt="poem">
       <div class="btnRow">
@@ -107,11 +98,12 @@ function firstScreen(){
   };
 }
 
+/* MIDDLE SCREEN 2 (smaller) */
 function secondScreen(){
-  if (topbar) topbar.style.display = ""; // show topbar
+  if (topbar) topbar.style.display = "";
 
   mountWithFade(`
-    <div class="card">
+    <div class="card normalSize">
       <div class="title">Would you do me the honors and be my valentine</div>
       <img class="centerImg" src="images/banner.png" alt="banner">
       <div class="btnRow">
@@ -125,8 +117,9 @@ function secondScreen(){
   document.getElementById("no2").onclick = () => fadeTo(guiltyScreen);
 }
 
+/* GUILTY SCREEN (big) */
 function guiltyScreen(){
-  if (topbar) topbar.style.display = ""; // keep title + background
+  if (topbar) topbar.style.display = "";
 
   mountWithFade(`
     <div class="guiltyText">
@@ -137,11 +130,10 @@ function guiltyScreen(){
   setTimeout(()=>fadeTo(finalScreen), 5000);
 }
 
-// FINAL SCREEN (no body wipe, keeps music + hearts background)
+/* FINAL 4 PICS (heart background stays visible) */
 function finalScreen(){
-  if (topbar) topbar.style.display = "none"; // hide the top title for final grid
+  if (topbar) topbar.style.display = "none";
 
-  // Clear app and mount full-screen grid (music continues because audio tag stays)
   app.innerHTML = `
     <div class="fullscreenGrid">
       <div class="gridCell"><img src="images/grid1.png" alt="1"></div>
@@ -153,5 +145,4 @@ function finalScreen(){
 }
 
 /* ---------------- START ---------------- */
-
 introScreen();
